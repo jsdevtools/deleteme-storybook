@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "start": "start-storybook -p 9001 -c .storybook",
+    "postinstall": "build-storybook -c .storybook -o public"
+  },
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@storybook/react": "^4.0.11",
+    "babel-loader": "^8.0.4"
+  }
+}
