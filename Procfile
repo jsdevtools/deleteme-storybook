@@ -1,1 +1,1 @@
-web: http-server
+web: http-server $BUILD_DIR

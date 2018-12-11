@@ -61,4 +61,5 @@ typings/
 .next
 
 # deployment directory
-public
+build
+storybook-static

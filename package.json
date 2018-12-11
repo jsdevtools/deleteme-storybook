@@ -1,16 +1,49 @@
 {
+  "name": "storybook",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "start-storybook -p 9001 -c .storybook",
-    "postinstall": "build-storybook -c .storybook -o public"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start-storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -c .storybook -o storybook-static",
+    "postinstall": "npm run build && npm run build-storybook"
   },
+  "eslintConfig": {
+    "extends": "react-app",
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "dependencies": {
     "http-server": "^0.11.1",
+    "prop-types": "^15.6.2",
     "react": "^16.6.3",
-    "react-dom": "^16.6.3"
+    "react-dom": "^16.6.3",
+    "react-scripts": "^2.1.1",
+    "redux": "^4.0.1",
+    "styled-components": "^4.1.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@storybook/react": "^4.0.11",
-    "babel-loader": "^8.0.4"
+    "@babel/core": "^7.2.0",
+    "@storybook/addon-actions": "^4.0.12",
+    "@storybook/addon-links": "^4.0.12",
+    "@storybook/addons": "^4.0.12",
+    "@storybook/react": "^4.0.12",
+    "babel-loader": "^8.0.4",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-react": "^7.11.1",
+    "redux-devtools-extension": "^2.13.7"
   }
 }
