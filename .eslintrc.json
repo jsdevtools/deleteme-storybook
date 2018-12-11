@@ -1,0 +1,29 @@
+{
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "extends": "airbnb-base",
+    "rules": {
+        "comma-dangle": ["error", {
+            "functions": "never"
+        }],
+        "react/jsx-uses-react": 2,
+        "react/jsx-uses-vars": 2,
+        "react/react-in-jsx-scope": 2,
+        "max-len": ["error", {
+            "code": 110
+        }],
+        "no-console": ["error", {
+            "allow": ["log", "warn", "error"]
+        }]
+    },
+    "plugins": [
+        "react"
+    ],
+    "parser": "babel-eslint",
+    "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+    }
+}
