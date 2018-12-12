@@ -1,12 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { render } from 'react-dom';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import store from './app/state/store';
+import App from './app';
+import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const theme = {
+  borderWidth: '2px',
+  'button.primary': 'mediumseagreen',
+  'button.secondary': 'magenta'
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+render(
+  <ReduxProvider store={store}>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </ReduxProvider>,
+  document.getElementById('root')
+);
+registerServiceWorker();

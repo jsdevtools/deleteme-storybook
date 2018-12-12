@@ -16,7 +16,16 @@
         }],
         "no-console": ["error", {
             "allow": ["log", "warn", "error"]
-        }]
+        }],
+        "import/no-extraneous-dependencies": [
+            "error",
+            {"devDependencies": [
+                "**/*.test.js",
+                "**/*.spec.js",
+                "**/*.stories.js",
+                "stories/index.js"
+            ]}
+        ]
     },
     "plugins": [
         "react"
