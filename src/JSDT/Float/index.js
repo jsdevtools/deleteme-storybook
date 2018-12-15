@@ -3,24 +3,29 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import withPlaceHolder from '../withPlaceHolder';
 
-const StyledFloat = styled.div`
+const StyledFloatAbsolute = styled.div`
   z-index: ${props => props.zIndex};
   position: absolute;
+  pointer-events: none;
+`;
+
+const StyledFloat = styled.div`
+  z-index: ${props => props.zIndex};
   pointer-events: none;
 `;
 
 const TopFloat = styled(StyledFloat)`
   width: 100%;
   text-align: center;
-  top: ${props => props.top};
+  top: ${props => props.top}; 
 `;
 
-const TopLeftFloat = styled(StyledFloat)`
+const TopLeftFloat = styled(StyledFloatAbsolute)`
   top: ${props => props.top};
   left: ${props => props.left};
 `;
 
-const TopRightFloat = styled(StyledFloat)`
+const TopRightFloat = styled(StyledFloatAbsolute)`
   top: ${props => props.top};
   right: ${props => props.right};
 `;
