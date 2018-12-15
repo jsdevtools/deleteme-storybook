@@ -9,7 +9,7 @@ import Float from '.';
 
 addDecorator(withNotes);
 
-storiesOf('Float', module)
+storiesOf('Float/PlaceHolder', module)
   .add(
     'Top Left',
     () => <Float placement='topLeft' zIndex={20} margin='10px'/>,
