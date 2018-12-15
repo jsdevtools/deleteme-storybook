@@ -22,6 +22,7 @@ const PlaceHolderBorder = styled.div`
   padding: 10px;
   justify-content: center;
   align-items: center;
+  display:inline-block;
 `;
 
 const withPlaceHolder = WrappedComponent => (
