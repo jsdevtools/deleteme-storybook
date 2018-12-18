@@ -14,11 +14,10 @@ const ruxcReducer = (state = {}, action) => {
       }
       if (action.payload.instance !== 'ignore') {
         // eslint-disable-next-line
-        console.log(`Warning! - Duplicate instance of ${action.payload.instance}`);
+        console.warn(`Warning! - Duplicate instance of ${action.payload.instance}`);
       }
       return state;
     case types.CLR_RUXC:
-      console.log('clearing', action.payload.instance);
       // eslint-disable-next-line no-case-declarations
       const retVal = { ...state };
       delete retVal[`${action.payload.ns + action.payload.instance}/content`];
