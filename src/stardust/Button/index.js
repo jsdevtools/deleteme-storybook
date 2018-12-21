@@ -11,7 +11,7 @@ import { withRuxc } from '../../JSDT/withRuxc';
 class ConnectedButton extends React.Component {
   render() {
     // eslint-disable-next-line object-curly-newline
-    const { content, actions: acts, dispatchers, ...rest } = this.props;
+    const { initContent, initStyling, content, actions: acts, dispatchers, ...rest } = this.props;
     return (
       <SUIRButton
         {...rest}

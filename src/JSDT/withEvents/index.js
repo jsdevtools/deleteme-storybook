@@ -9,7 +9,7 @@ const ns = [uuid, libName, componentName, ''].join('/');
 const nsReducer = [uuid, libName, componentName, 'Reducer'].join('');
 
 const withEvents = (WrappedComponent, nsData, wrappedComponentsActions) => {
-  const mapStateToProps = () => {};
+  const mapStateToProps = () => ({});
 
   const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatchers: {
