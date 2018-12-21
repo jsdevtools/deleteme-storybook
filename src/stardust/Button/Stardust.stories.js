@@ -3,9 +3,11 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { storiesOf, addDecorator } from '@storybook/react';
 import { withNotes } from '@storybook/addon-notes';
+import { themes } from '@stardust-ui/react';
+import { Themer } from '../Themer';
 import store from '../../app/state/store';
-import { Button, ColoredButton } from '.';
-import { StoryActionLogger } from '../StoryActionLogger';
+import { StoryActionLogger } from '../../JSDT/StoryActionLogger';
+import { Button } from '.';
 
 const theme = {
   borderWidth: '2px',
@@ -30,18 +32,25 @@ addDecorator(withNotes);
 addDecorator(ThemeDecorator);
 addDecorator(ReduxDecorator);
 
-storiesOf('JSDT/Button', module)
+storiesOf('stardust/Button', module)
   .add(
     'Button',
     () => (
+      <Themer
+        instance='themer'
+      >
+        <React.Fragment>
           <Button
-            instance='superbutton'
+            icon="add"
+            iconPosition="after"
+            primary
+            instance='suirbutton1'
             actions={{
               onClick: {
                 action: 'chgLabel',
-                target: 'superbutton8',
+                target: 'themer',
                 arguments: {
-                  newLabel: 'Foo'
+                  newLabel: themes.teams
                 }
               }
             }}
@@ -52,31 +61,29 @@ storiesOf('JSDT/Button', module)
               label: 'Hola'
             }}
           />
+          <Button
+            icon="add"
+            iconPosition="after"
+            primary
+            instance='suirbutton2'
+            actions={{
+              onClick: {
+                action: 'chgLabel',
+                target: 'themer',
+                arguments: {
+                  newLabel: themes.teamsHighContrast
+                }
+              }
+            }}
+            initStyling={{
+              color: 'blue'
+            }}
+            initContent={{
+              label: 'Adios'
+            }}
+          />
+        </React.Fragment>
+      </Themer>
     ),
     { notes: 'HI' }
-  )
-  .add(
-    'ColoredButton',
-    () => (
-        <Button
-          instance='superbutton2'
-          actions={{
-            onClick: {
-              action: 'chgLabel',
-              target: 'superbutton',
-              arguments: {
-                newLabel: 'Foo'
-              }
-            }
-          }}
-          initContent={{
-            label: 'Adios'
-          }}
-          render={(actions, content, styling) => (
-            <ColoredButton actions={actions} styling={styling}>
-              {content.label}
-            </ColoredButton>
-          )}
-        />
-    )
   );

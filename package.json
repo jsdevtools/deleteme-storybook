@@ -26,6 +26,7 @@
   ],
   "dependencies": {
     "@babel/core": "^7.2.0",
+    "@stardust-ui/react": "^0.15.0",
     "@storybook/addon-actions": "^4.0.12",
     "@storybook/addon-links": "^4.0.12",
     "@storybook/addon-notes": "^4.1.1",

@@ -1,36 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
+import { Button as SUIRButton } from '@stardust-ui/react';
 import actions from './ducks/actions';
-// import operations from './ducks/operations';
 import types from './ducks/action-types';
 import { libName, uuid } from '../ns';
-import ColoredButton from './ColoredButton.jsx';
-// import { withRuxc } from '../withRuxc';
-import { withActions } from '../withActions';
-import { withContent } from '../withContent';
-import { withEvents } from '../withEvents';
-import { withStyling } from '../withStyling';
+import { withRuxc } from '../../JSDT/withRuxc';
+
 
 class ConnectedButton extends React.Component {
   render() {
+    // eslint-disable-next-line object-curly-newline
+    const { content, actions: acts, dispatchers, ...rest } = this.props;
     return (
-      <ColoredButton
-        styling={this.props.styling}
-        {...Object.keys(this.props.actions).reduce((acc, curr) => (
+      <SUIRButton
+        {...rest}
+        content={content.label}
+        {...Object.keys(acts).reduce((acc, curr) => (
           {
             ...acc,
             [curr]: () => {
-              this.props.dispatchers[this.props.actions[curr].action](
-                this.props.actions[curr].target,
-                this.props.actions[curr].arguments
+              dispatchers[acts[curr].action](
+                acts[curr].target,
+                acts[curr].arguments
               );
             }
           }), {})}
-      >
-        {this.props.content.label}
-      </ColoredButton>
+      />
     );
   }
 }
@@ -56,32 +52,9 @@ const mapDispatchToProps = dispatch => ({
 const Button = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTheme(
-  withStyling(
-    ...withEvents(
-      ...withContent(
-        ...withActions(ConnectedButton, { componentName, ns, nsReducer }, types)
-      )
-    )
-  )[0]
-));
-// )(withTheme(withRuxc(ConnectedButton, { componentName, ns, nsReducer }, types)));
-
-Button.propTypes = {
-  instance: PropTypes.string.isRequired
-};
-
-Button.defaultProps = {
-  defaultStyling: {
-    color: 'pink'
-  },
-  defaultThemeMap: {
-    color: 'button.primary'
-  }
-};
+)(withTheme(withRuxc(ConnectedButton, { componentName, ns, nsReducer }, types)));
 
 export { ns, nsReducer, Button };
-export { default as ColoredButton } from './ColoredButton.jsx';
 
 // eslint-disable-next-line
 export { default } from './ducks/reducers.js';

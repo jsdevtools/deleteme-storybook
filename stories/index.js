@@ -2,7 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button } from '@storybook/react/demo';
 
-storiesOf('Button', module)
+import { Provider, themes, Button as SUIRButton } from '@stardust-ui/react';
+
+storiesOf('stories/Button', module)
   .add('with text', () => <Button>Hello Button</Button>)
   .add('with some emoji', () => (
     <Button>
@@ -10,4 +12,9 @@ storiesOf('Button', module)
         😀 😎 👍 💯
       </span>
     </Button>
+  ))
+  .add('stardust button', () => (
+    <Provider theme={themes.teams}>
+      <SUIRButton content="Theming" icon="add" iconPosition="after" primary />
+    </Provider>
   ));

@@ -1,0 +1,7 @@
+const INIT_STYLING = 'INIT_STYLING';
+const CLR_STYLING = 'CLR_STYLING';
+
+export default {
+  INIT_STYLING,
+  CLR_STYLING
+};

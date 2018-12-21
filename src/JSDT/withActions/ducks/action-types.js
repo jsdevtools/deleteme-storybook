@@ -1,0 +1,7 @@
+const INIT_ACTIONS = 'INIT_ACTIONS';
+const CLR_ACTIONS = 'CLR_ACTIONS';
+
+export default {
+  INIT_ACTIONS,
+  CLR_ACTIONS
+};

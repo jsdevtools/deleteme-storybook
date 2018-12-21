@@ -1,9 +1,10 @@
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 import JSDTreducers from '../../JSDT';
+import StardustReducers from '../../stardust';
 
 const rootReducer = (state = {}, action) => (
-  Object.values({ ...JSDTreducers }).reduce((acc, curr) => (
+  Object.values({ ...JSDTreducers, ...StardustReducers }).reduce((acc, curr) => (
     curr(acc, action)
   ), state)
 );
