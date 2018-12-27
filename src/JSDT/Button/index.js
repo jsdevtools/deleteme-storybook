@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withTheme } from 'styled-components';
+// import { withTheme } from 'styled-components';
+import { withThemer } from '../Themer';
 import actions from './ducks/actions';
 // import operations from './ducks/operations';
 import types from './ducks/action-types';
@@ -22,10 +23,19 @@ class ConnectedButton extends React.Component {
           {
             ...acc,
             [curr]: () => {
-              this.props.dispatchers[this.props.actions[curr].action](
-                this.props.actions[curr].target,
-                this.props.actions[curr].arguments
-              );
+              if (Array.isArray(this.props.actions[curr])) {
+                this.props.actions[curr].forEach((dispatcher) => {
+                  this.props.dispatchers[dispatcher.action](
+                    dispatcher.target,
+                    dispatcher.arguments
+                  );
+                });
+              } else {
+                this.props.dispatchers[this.props.actions[curr].action](
+                  this.props.actions[curr].target,
+                  this.props.actions[curr].arguments
+                );
+              }
             }
           }), {})}
       >
@@ -45,8 +55,11 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
-    chgColor: (instance, args) => dispatch(actions.chgColor(ns, instance, args.newColor)),
+    chgColor: (instance, args) => dispatch(actions.chgColor(ns, instance, args)),
     chgLabel: (instance, args) => dispatch(actions.chgLabel(ns, instance, args.newLabel)),
+    chgThemer: (instance, args) => dispatch(actions.chgThemer(ns, instance, args)),
+    chgTheme: (instance, args) => dispatch(actions.chgTheme(ns, instance, args.newTheme)),
+    chgThemeMap: (instance, args) => dispatch(actions.chgThemeMap(ns, instance, args)),
     complexChgLabel: (instances, args) => {
       instances.map(cur => dispatch(actions.chgLabel(ns, cur, args.newLabel)));
     }
@@ -56,7 +69,7 @@ const mapDispatchToProps = dispatch => ({
 const Button = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withTheme(
+)(withThemer(
   withStyling(
     ...withEvents(
       ...withContent(
@@ -73,7 +86,8 @@ Button.propTypes = {
 
 Button.defaultProps = {
   defaultStyling: {
-    color: 'pink'
+    color: 'pink',
+    background: 'none'
   },
   defaultThemeMap: {
     color: 'button.primary'

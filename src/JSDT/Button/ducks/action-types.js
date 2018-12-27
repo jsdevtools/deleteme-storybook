@@ -1,7 +1,13 @@
 const CHG_LABEL = 'CHG_LABEL';
 const CHG_COLOR = 'CHG_COLOR';
+const CHG_THEMER = 'CHG_THEMER';
+const CHG_THEME = 'CHG_THEME';
+const CHG_THEMEMAP = 'CHG_THEMEMAP';
 
 export default {
   CHG_LABEL,
-  CHG_COLOR
+  CHG_COLOR,
+  CHG_THEMER,
+  CHG_THEME,
+  CHG_THEMEMAP
 };

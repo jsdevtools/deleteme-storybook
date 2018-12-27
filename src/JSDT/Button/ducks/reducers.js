@@ -1,29 +1,41 @@
 import types from './action-types';
-// import { ns } from '..';
+import { ns } from '..';
 
 const buttonReducer = (state = {}, action) => {
+  console.log('br', state, action);
   switch (action.type) {
     case types.CHG_COLOR:
       return Object.keys(state)
-        .filter(key => key.includes(`${action.payload.instance}/styling`))
-        .reduce((acc, curr) => (
-          {
+        .filter(key => key.includes(`${ns}${action.payload.instance}/styling`))
+        .reduce((acc, curr) => {
+          console.log('hit JSDT button chg_color', state, ns, action);
+          const retVal = {
             ...acc,
             [curr]: {
               ...state[curr],
-              color: {
-                ...state[curr].color,
-                effective: action.payload.newColor
-              }
+              ...action.payload.newColor
             }
-          }
-        ), { ...state });
+          };
+          console.log('FOOOO', { ...state[curr], ...action.payload.newColor });
+          return retVal;
+        }, { ...state });
     case types.CHG_LABEL:
       return Object.keys(state)
-        .filter(key => key.includes(`${action.payload.instance}/content`))
+        .filter(key => key.includes(`${ns}${action.payload.instance}/content`))
         .reduce((acc, curr) => (
           { ...acc, [curr]: { label: action.payload.newLabel } }
         ), { ...state });
+    case types.CHG_THEMEMAP:
+      if (state[`${action.payload.ns}${action.payload.instance}/themeMap`] === undefined) {
+        return state;
+      }
+      return {
+        ...state,
+        [`${action.payload.ns}${action.payload.instance}/themeMap`]: {
+          ...state[`${action.payload.ns}${action.payload.instance}/themeMap`],
+          ...action.payload.newThemeMap
+        }
+      };
     default:
       return state;
   }

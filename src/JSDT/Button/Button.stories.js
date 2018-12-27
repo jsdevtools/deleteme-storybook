@@ -1,30 +1,25 @@
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
+// import { ThemeProvider } from 'styled-components';
 import { storiesOf, addDecorator } from '@storybook/react';
 import { withNotes } from '@storybook/addon-notes';
+import { Themer } from '../Themer';
+import themes from '../Themer/theme';
 import store from '../../app/state/store';
 import { Button, ColoredButton } from '.';
 import { StoryActionLogger } from '../StoryActionLogger';
 
-const theme = {
-  borderWidth: '2px',
-  'button.primary': 'mediumseagreen',
-  'button.secondary': 'magenta'
-};
-
-const emptyTheme = {};
 
 const ThemeDecorator = storyFn => (
-  <ThemeProvider theme={theme}>
+  <Themer instance='default' initTheme={themes.defaultTheme}>
     { storyFn() }
-  </ThemeProvider>
+  </Themer>
 );
 
 const EmptyThemeDecorator = storyFn => (
-  <ThemeProvider theme={emptyTheme}>
+  <Themer instance='empty' initTheme={{}}>
     { storyFn() }
-  </ThemeProvider>
+  </Themer>
 );
 
 const ReduxDecorator = storyFn => (
@@ -37,70 +32,130 @@ const ReduxDecorator = storyFn => (
 addDecorator(withNotes);
 addDecorator(ReduxDecorator);
 
-storiesOf('JSDT/Button', module)
-  .addDecorator(ThemeDecorator)
-  .add(
-    'Button', () => (
-      <Button
-        instance='superbutton'
-        actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton8', arguments: { newLabel: 'Foo' } }
-        }}
-        initStyling={{ color: 'blue' }}
-        initContent={{ label: 'Hola' }}
-      />
-    ), { notes: 'HI' }
-  )
-  .add(
-    'ColoredButton', () => (
-      <Button
-        instance='superbutton2'
-        actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
-        }}
-        initContent={{ label: 'Adios' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
-      />
-    )
-  );
-
 storiesOf('JSDT/Button/Styling/Themed', module)
   .addDecorator(ThemeDecorator)
   .add(
     'Default Theme Map', () => (
-      <Button
-        instance='superbutton1'
-        actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
-        }}
-        initContent={{ label: 'Theme primary medium sea green' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
-      />
+      <React.Fragment>
+        <Button
+          instance='superbutton1'
+          actions={{
+            onClick: [
+              {
+                action: 'chgLabel',
+                target: 'superbutton1',
+                arguments: { newLabel: 'Theme primary medium sea green' }
+              },
+              {
+                action: 'chgThemer',
+                target: 'default',
+                arguments: { 'button.primary': 'mediumseagreen' }
+              },
+              {
+                action: 'chgTheme',
+                target: 'default',
+                arguments: { newTheme: 'defaultTheme' }
+              }
+            ]
+          }}
+          initContent={{ label: 'Theme primary medium sea green' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton1a'
+          actions={{
+            onClick: { action: 'chgLabel', target: 'superbutton1', arguments: { newLabel: 'Foo' } }
+          }}
+          initContent={{ label: 'Change Label' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton1b'
+          actions={{
+            onClick: { action: 'chgThemer', target: 'default', arguments: { 'button.primary': 'red' } }
+          }}
+          initContent={{ label: 'Change theme values' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton1c'
+          actions={{
+            onClick: { action: 'chgTheme', target: 'default', arguments: { newTheme: 'alternative' } }
+          }}
+          initContent={{ label: 'Change theme' }}
+        />
+      </React.Fragment>
     )
   )
   .add(
     'Custom Theme Map', () => (
-      <Button
-        instance='superbutton2'
-        actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
-        }}
-        initContent={{ label: 'Theme secondary magenta' }}
-        themeMap={{ color: 'button.secondary' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
-      />
+      <React.Fragment>
+        <Button
+          instance='superbutton2'
+          actions={{
+            onClick: [
+              {
+                action: 'chgLabel',
+                target: 'superbutton2',
+                arguments: { newLabel: 'Theme secondary magenta' }
+              },
+              {
+                action: 'chgThemer',
+                target: 'default',
+                arguments: { 'button.secondary': 'magenta' }
+              },
+              {
+                action: 'chgTheme',
+                target: 'default',
+                arguments: { newTheme: 'defaultTheme' }
+              },
+              {
+                action: 'chgThemeMap',
+                target: 'superbutton2',
+                arguments: { color: 'button.secondary' }
+              }
+            ]
+          }}
+          initContent={{ label: 'Theme secondary magenta' }}
+          initThemeMap={{ color: 'button.secondary' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton2a'
+          actions={{
+            onClick: { action: 'chgLabel', target: 'superbutton2', arguments: { newLabel: 'Foo' } }
+          }}
+          initContent={{ label: 'Change Label' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton2b'
+          actions={{
+            onClick: { action: 'chgThemer', target: 'default', arguments: { 'button.secondary': 'red' } }
+          }}
+          initContent={{ label: 'Change theme values' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton2c'
+          actions={{
+            onClick: { action: 'chgTheme', target: 'default', arguments: { newTheme: 'alternative' } }
+          }}
+          initContent={{ label: 'Change theme' }}
+        />
+        <br/>
+        <Button
+          instance='superbutton2d'
+          actions={{
+            onClick: {
+              action: 'chgThemeMap',
+              target: 'superbutton2',
+              arguments: { color: 'button.primary' }
+            }
+          }}
+          initContent={{ label: 'Change Theme Map' }}
+        />
+      </React.Fragment>
     )
   )
   .add(
@@ -108,15 +163,10 @@ storiesOf('JSDT/Button/Styling/Themed', module)
       <Button
         instance='superbutton3'
         actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
+          onClick: { action: 'chgColor', target: 'superbutton3', arguments: { color: 'orange' } }
         }}
         initContent={{ label: 'Override default theme w/ blue' }}
         initStyling={{ color: 'blue' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
       />
     )
   )
@@ -125,16 +175,11 @@ storiesOf('JSDT/Button/Styling/Themed', module)
       <Button
         instance='superbutton4'
         actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
+          onClick: { action: 'chgColor', target: 'superbutton4', arguments: { color: 'yellow' } }
         }}
         initContent={{ label: 'Override custom theme w/ orange' }}
         initStyling={{ color: 'orange' }}
-        themeMap={{ color: 'button.secondary' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
+        initThemeMap={{ color: 'button.secondary' }}
       />
     )
   );
@@ -146,14 +191,9 @@ storiesOf('JSDT/Button/Styling/No Theme', module)
       <Button
         instance='superbutton5'
         actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
+          onClick: { action: 'chgColor', target: 'superbutton5', arguments: { color: 'cyan' } }
         }}
         initContent={{ label: 'Default Pink' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
       />
     )
   )
@@ -162,15 +202,10 @@ storiesOf('JSDT/Button/Styling/No Theme', module)
       <Button
         instance='superbutton6'
         actions={{
-          onClick: { action: 'chgLabel', target: 'superbutton', arguments: { newLabel: 'Foo' } }
+          onClick: { action: 'chgColor', target: 'superbutton6', arguments: { color: 'cyan' } }
         }}
         initContent={{ label: 'Override Default Purple' }}
         initStyling={{ color: 'purple' }}
-        render={(actions, content, styling) => (
-          <ColoredButton actions={actions} styling={styling}>
-            {content.label}
-          </ColoredButton>
-        )}
       />
     )
   );

@@ -3,21 +3,6 @@ import types from './action-types';
 
 const themerReducer = (state = {}, action) => {
   switch (action.type) {
-    case types.CHG_COLOR:
-      return Object.keys(state)
-        .filter(key => key.includes(`${action.payload.instance}/styling`))
-        .reduce((acc, curr) => (
-          {
-            ...acc,
-            [curr]: {
-              ...state[curr],
-              color: {
-                ...state[curr].color,
-                effective: action.payload.newColor
-              }
-            }
-          }
-        ), { ...state });
     case types.CHG_LABEL:
       return Object.keys(state)
         .filter(key => key.includes(`${action.payload.instance}/content`))

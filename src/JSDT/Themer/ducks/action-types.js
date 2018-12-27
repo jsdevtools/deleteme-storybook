@@ -1,0 +1,11 @@
+const INIT_THEMER = 'INIT_THEMER';
+const CLR_THEMER = 'CLR_THEMER';
+const CHG_THEMER = 'CHG_THEMER';
+const CHG_THEME = 'CHG_THEME';
+
+export default {
+  INIT_THEMER,
+  CLR_THEMER,
+  CHG_THEMER,
+  CHG_THEME
+};

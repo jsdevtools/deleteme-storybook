@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "start-storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -c .storybook -o storybook-static",
-    "postinstall": "npm run build && npm run build-storybook"
+    "postinstall": "npm run build && npm run build-storybook && mkdir -p build/semantic && mkdir -p storybook-static/semantic && cp -r semantic/dist build/semantic/ && cp -r semantic/dist storybook-static/semantic/"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -41,12 +41,14 @@
     "react-scripts": "^2.1.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
+    "semantic-ui": "^2.4.2",
     "styled-components": "^4.1.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-react": "^7.11.1",
+    "gulp": "^3.9.1"
   }
 }

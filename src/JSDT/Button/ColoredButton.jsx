@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ColoredButton = styled.div`
+const ColoredButton = styled.button`
     color:${props => props.styling.color};
     border:1px solid #CCC;
     background:${props => props.styling.background};

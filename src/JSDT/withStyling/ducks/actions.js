@@ -12,7 +12,23 @@ const clrStyling = (ns, instance) => ({
   payload: { ns, instance }
 });
 
+const initThemeMap = (ns, instance, themeMap) => ({
+  type: types.INIT_THEMEMAP,
+  payload: {
+    ns, instance, themeMap
+  }
+});
+
+const clrThemeMap = (ns, instance) => ({
+  type: types.CLR_THEMEMAP,
+  payload: {
+    ns, instance
+  }
+});
+
 export default {
   initStyling,
-  clrStyling
+  clrStyling,
+  initThemeMap,
+  clrThemeMap
 };

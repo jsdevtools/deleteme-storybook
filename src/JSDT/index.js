@@ -4,6 +4,8 @@ import contentReducer, { nsReducer as nsContentReducer } from './withContent';
 import eventsReducer, { nsReducer as nsEventsReducer } from './withEvents';
 import stylingReducer, { nsReducer as nsStylingReducer } from './withStyling';
 import storyActionLoggerReducer, { nsReducer as nsStoryActionLoggerReducer } from './StoryActionLogger';
+import themerReducer, { nsReducer as nsThemerReducer } from './Themer';
+import buttonReducer, { nsReducer as nsButtonReducer } from './Button';
 
 export default {
   [nsRuxcReducer]: ruxcReducer,
@@ -11,5 +13,7 @@ export default {
   [nsContentReducer]: contentReducer,
   [nsEventsReducer]: eventsReducer,
   [nsStylingReducer]: stylingReducer,
-  [nsStoryActionLoggerReducer]: storyActionLoggerReducer
+  [nsStoryActionLoggerReducer]: storyActionLoggerReducer,
+  [nsThemerReducer]: themerReducer,
+  [nsButtonReducer]: buttonReducer
 };
