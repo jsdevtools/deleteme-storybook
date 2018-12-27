@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "start-storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -c .storybook -o storybook-static",
-    "postinstall": "npm run build && npm run build-storybook && mkdir -p build/semantic && mkdir -p storybook-static/semantic && cp -r semantic/dist build/semantic/ && cp -r semantic/dist storybook-static/semantic/"
+    "postinstall": "npm run build && npm run build-storybook && mkdir -p build/semantic && mkdir -p storybook-static/semantic && cp -r public/semantic/dist build/semantic/ && cp -r public/semantic/dist storybook-static/semantic/"
   },
   "eslintConfig": {
     "extends": "react-app",
