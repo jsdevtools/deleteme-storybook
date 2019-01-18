@@ -2,13 +2,11 @@ import types from './action-types';
 import { ns } from '..';
 
 const buttonReducer = (state = {}, action) => {
-  console.log('br', state, action);
   switch (action.type) {
     case types.CHG_COLOR:
       return Object.keys(state)
         .filter(key => key.includes(`${ns}${action.payload.instance}/styling`))
         .reduce((acc, curr) => {
-          console.log('hit JSDT button chg_color', state, ns, action);
           const retVal = {
             ...acc,
             [curr]: {
@@ -16,7 +14,6 @@ const buttonReducer = (state = {}, action) => {
               ...action.payload.newColor
             }
           };
-          console.log('FOOOO', { ...state[curr], ...action.payload.newColor });
           return retVal;
         }, { ...state });
     case types.CHG_LABEL:

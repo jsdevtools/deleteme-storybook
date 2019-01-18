@@ -9,33 +9,26 @@ const ns = [uuid, libName, componentName, ''].join('/');
 const nsReducer = [uuid, libName, componentName, 'Reducer'].join('');
 
 const withRuxc = (WrappedComponent, nsData, wrappedComponentsActions) => {
-  const mapStateToProps = (state, ownProps) => {
-    const retVal = Object.keys(state)
-      .filter(prefix => prefix.includes(`${nsData.ns}${ownProps.instance}/`))
-      .reduce(acc => (
-        {
-          content: {
-            ...acc.content,
-            ...state[`${nsData.ns + ownProps.instance}/content`]
-          },
-          styling: {
-            ...acc.styling,
-            ...Object.keys(state[`${nsData.ns + ownProps.instance}/styling`])
-              .reduce((acc2, curr) => ({
-                ...acc2,
-                [curr]: state[`${nsData.ns + ownProps.instance}/styling`][curr].effective
-              }), {})
-          }
-        }), { content: {}, styling: {} });
-    return ownProps.instance === 'ignore' ? { content: ownProps.initContent } : retVal;
-  };
+  const mapStateToProps = (state, ownProps) => (
+    ownProps.instance === 'ignore'
+      ? { content: ownProps.initContent, items: ownProps.initItems, styling: ownProps.initStyling }
+      : {
+        content: state[`${nsData.ns + ownProps.instance}/content`] || {},
+        items: state[`${nsData.ns + ownProps.instance}/items`] || [],
+        styling: state[`${nsData.ns + ownProps.instance}/styling`]
+          ? Object.keys(state[`${nsData.ns + ownProps.instance}/styling`])
+            .reduce((acc, cur) => ({
+              ...acc,
+              [cur]: state[`${nsData.ns + ownProps.instance}/styling`][cur].effective
+            }), {})
+          : {}
+      }
+  );
 
   const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatchers: {
       ...ownProps.dispatchers,
-      initRuxc: (instance, args, events, styling, actionTypes) => {
-        dispatch(actions.initRuxc(nsData.ns, instance, args, events, styling, actionTypes));
-      },
+      initRuxc: args => dispatch(actions.initRuxc(nsData.ns, args)),
       clrRuxc: instance => dispatch(actions.clrRuxc(nsData.ns, instance))
     }
   });
@@ -43,33 +36,33 @@ const withRuxc = (WrappedComponent, nsData, wrappedComponentsActions) => {
   class connectedWrappedComponent extends React.Component {
     componentDidMount() {
       const effectiveTheme = [...new Set(
-        Object.keys(this.props.themeMap === undefined ? {} : this.props.themeMap)
-          .concat(Object.keys(this.props.defaultThemeMap === undefined ? {} : this.props.defaultThemeMap))
+        Object.keys(this.props.themeMap || {})
+          .concat(Object.keys(this.props.defaultThemeMap || {}))
       )].reduce((acc, curr) => {
-        if (this.props.themeMap !== undefined) {
-          if (this.props.themeMap[curr] !== undefined) {
-            if (this.props.theme[this.props.themeMap[curr]] !== undefined) {
-              return {
-                ...acc,
-                [curr]: this.props.theme[this.props.themeMap[curr]]
-              };
-            }
-          }
+        if (
+          this.props.themeMap
+          && this.props.themeMap[curr]
+          && this.props.theme[this.props.themeMap[curr]]
+        ) {
+          return {
+            ...acc,
+            [curr]: this.props.theme[this.props.themeMap[curr]]
+          };
         }
-        if (this.props.defaultThemeMap !== undefined) {
-          if (this.props.defaultThemeMap[curr] !== undefined) {
-            if (this.props.theme[this.props.defaultThemeMap[curr]] !== undefined) {
-              return {
-                ...acc,
-                [curr]: this.props.theme[this.props.defaultThemeMap[curr]]
-              };
-            }
-          }
+        if (
+          this.props.defaultThemeMap
+          && this.props.defaultThemeMap[curr]
+          && this.props.theme[this.props.defaultThemeMap[curr]]
+        ) {
+          return {
+            ...acc,
+            [curr]: this.props.theme[this.props.defaultThemeMap[curr]]
+          };
         }
         return acc;
       }, {});
-      const override = this.props.initStyling === undefined ? {} : this.props.initStyling;
-      const defaults = this.props.defaultStyling === undefined ? {} : this.props.defaultStyling;
+      const override = this.props.initStyling || {};
+      const defaults = this.props.defaultStyling || {};
       const styling = [...new Set(
         Object.keys(override)
           .concat(Object.keys(effectiveTheme))
@@ -90,11 +83,14 @@ const withRuxc = (WrappedComponent, nsData, wrappedComponentsActions) => {
       }), {});
 
       this.props.dispatchers.initRuxc(
-        this.props.instance,
-        this.props.initContent,
-        this.props.actions,
-        styling,
-        wrappedComponentsActions
+        {
+          instance: this.props.instance,
+          content: this.props.initContent,
+          events: this.props.actions,
+          styling,
+          actionTypes: wrappedComponentsActions,
+          items: this.props.initItems
+        }
       );
     }
 

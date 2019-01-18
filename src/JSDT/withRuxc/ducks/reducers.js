@@ -3,13 +3,16 @@ import types from './action-types';
 const ruxcReducer = (state = {}, action) => {
   switch (action.type) {
     case types.INIT_RUXC:
-      if (state[`${action.payload.ns + action.payload.instance}/content`] === undefined) {
+      if (state[`${action.payload.ns + action.payload.args.instance}/content`] === undefined) {
         return {
           ...state,
-          [`${action.payload.ns + action.payload.instance}/content`]: action.payload.newLabel,
-          [`${action.payload.ns + action.payload.instance}/actions`]: Object.keys(action.payload.actionTypes),
-          [`${action.payload.ns + action.payload.instance}/events`]: Object.keys(action.payload.events),
-          [`${action.payload.ns + action.payload.instance}/styling`]: action.payload.styling
+          [`${action.payload.ns + action.payload.args.instance}/content`]: action.payload.args.content,
+          [`${action.payload.ns + action.payload.args.instance}/actions`]:
+            Object.keys(action.payload.args.actionTypes),
+          [`${action.payload.ns + action.payload.args.instance}/events`]:
+            Object.keys(action.payload.args.events),
+          [`${action.payload.ns + action.payload.args.instance}/styling`]: action.payload.args.styling,
+          [`${action.payload.ns + action.payload.args.instance}/items`]: action.payload.args.items
         };
       }
       if (action.payload.instance !== 'ignore') {
@@ -24,6 +27,7 @@ const ruxcReducer = (state = {}, action) => {
       delete retVal[`${action.payload.ns + action.payload.instance}/actions`];
       delete retVal[`${action.payload.ns + action.payload.instance}/events`];
       delete retVal[`${action.payload.ns + action.payload.instance}/styling`];
+      delete retVal[`${action.payload.ns + action.payload.instance}/items`];
       return retVal;
     default:
       return state;

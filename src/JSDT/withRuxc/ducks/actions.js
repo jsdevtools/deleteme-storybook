@@ -1,9 +1,9 @@
 import types from './action-types';
 
-const initRuxc = (ns, instance, newLabel, events, styling, actionTypes) => ({
+const initRuxc = (ns, args) => ({
   type: types.INIT_RUXC,
   payload: {
-    ns, instance, newLabel, events, styling, actionTypes
+    ns, args
   }
 });
 

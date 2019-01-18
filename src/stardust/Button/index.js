@@ -43,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
   dispatchers: {
     chgColor: (instance, args) => dispatch(actions.chgColor(ns, instance, args.newColor)),
     chgLabel: (instance, args) => dispatch(actions.chgLabel(ns, instance, args.newLabel)),
+    chgTheme: (instance, args) => dispatch(actions.chgTheme(ns, instance, args.newTheme)),
     complexChgLabel: (instances, args) => {
       instances.map(cur => dispatch(actions.chgLabel(ns, cur, args.newLabel)));
     }

@@ -10,7 +10,13 @@ const chgLabel = (ns, instance, newLabel) => ({
   payload: { ns, instance, newLabel }
 });
 
+const chgTheme = (ns, instance, newTheme) => ({
+  type: types.CHG_THEME,
+  payload: { ns, instance, newTheme }
+});
+
 export default {
   chgLabel,
-  chgColor
+  chgColor,
+  chgTheme
 };

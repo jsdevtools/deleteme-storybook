@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "@babel/core": "^7.2.0",
-    "@stardust-ui/react": "^0.15.0",
+    "@stardust-ui/react": "^0.16.1",
     "@storybook/addon-actions": "^4.0.12",
     "@storybook/addon-links": "^4.0.12",
     "@storybook/addon-notes": "^4.1.1",
@@ -49,6 +49,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "react-test-renderer": "^16.7.0"
   }
 }

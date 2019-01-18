@@ -1,0 +1,914 @@
+import React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import { storiesOf, addDecorator } from '@storybook/react';
+import { withNotes } from '@storybook/addon-notes';
+import { themes, Text } from '@stardust-ui/react';
+import { Themer } from '../Themer';
+import store from '../../app/state/store';
+import { StoryActionLogger } from '../../JSDT/StoryActionLogger';
+import { Button } from '.';
+import { Dropdown } from '../Dropdown';
+import Float from '../../JSDT/Float';
+
+const theme = {
+  borderWidth: '2px',
+  'button.primary': 'mediumseagreen',
+  'button.secondary': 'magenta'
+};
+
+const ThemeDecorator = storyFn => (
+  <ThemeProvider theme={theme}>
+    <Themer
+      instance='themer'
+    >
+      <div style={{ padding: '15px', background: '#bbb' }}>
+        <Float placement='topRight' zIndex={20} margin='10px'>
+          <Dropdown
+            instance='suirdropdown'
+            multiple
+            placeholder={'Make a selection...'}
+            toggleButton
+            search
+            content={{}}
+            styling={{}}
+            actions={{
+              onSearchQueryChange: {
+                action: 'chgSearchQuery',
+                target: 'suirdropdown1a',
+                arguments: {
+                  newSearchQuery: ''
+                }
+              },
+              onSelectedChange: {
+                action: 'chgSelected',
+                target: 'themer'
+              }
+            }}
+            initItems={[
+              'teams',
+              'teamsHighContrast'
+            ]}
+          />
+        </Float>
+        { storyFn() }
+      </div>
+    </Themer>
+  </ThemeProvider>
+);
+
+const ReduxDecorator = storyFn => (
+  <ReduxProvider store={store}>
+    <StoryActionLogger/>
+    { storyFn() }
+  </ReduxProvider>
+);
+
+addDecorator(withNotes);
+addDecorator(ThemeDecorator);
+addDecorator(ReduxDecorator);
+
+storiesOf('stardust/Button', module)
+  .add(
+    'Default',
+    () => (
+      <React.Fragment>
+        <Text size='large' weight='bold' content='Default:'/>
+        <br/>
+        <Button
+            instance='suirbutton1a'
+            actions={{
+              onClick: {
+                action: 'chgTheme',
+                target: 'themer',
+                arguments: {
+                  newTheme: themes.teams
+                }
+              }
+            }}
+            initContent={{
+              label: 'Click Here'
+            }}
+          />
+          <Button
+            instance='suirbutton1b'
+            actions={{
+              onClick: {
+                action: 'chgTheme',
+                target: 'themer',
+                arguments: {
+                  newTheme: themes.teamsHighContrast
+                }
+              }
+            }}
+            initContent={{
+              label: 'See how this very long text shows up on the button'
+            }}
+          />
+          <Button
+            instance='suirbutton1c'
+            actions={{
+              onClick: {
+                action: 'chgTheme',
+                target: 'themer',
+                arguments: {
+                  newTheme: themes.teams
+                }
+              }
+            }}
+          >Hi There</Button>
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Emphasis:'/>
+        <br/>
+        <Button
+          primary
+          instance='suirbutton2a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Primary'
+          }}
+        />
+        <Button
+          secondary
+          instance='suirbutton2b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Secondary'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Icon:'/>
+        <br/>
+        <Button
+          primary
+          icon='book'
+          instance='suirbutton3a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          secondary
+          icon='book'
+          instance='suirbutton3b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Icon Only:'/>
+        <br/>
+        <Button
+          primary
+          icon='book'
+          iconOnly
+          instance='suirbutton4a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          secondary
+          icon='book'
+          iconOnly
+          instance='suirbutton4b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Icon and Content:'/>
+        <br/>
+        <Button
+          primary
+          icon='book'
+          iconPosition='before'
+          instance='suirbutton5a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me before'
+          }}
+        />
+        <Button
+          primary
+          icon='book'
+          iconPosition='after'
+          instance='suirbutton5b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me after'
+          }}
+        />
+        <br/>
+        <Button
+          secondary
+          icon='book'
+          iconPosition='before'
+          instance='suirbutton5c'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me before'
+          }}
+        />
+        <Button
+          secondary
+          icon='book'
+          iconPosition='after'
+          instance='suirbutton5d'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me after'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Fluid:'/>
+        <br/>
+        <Button
+          instance='suirbutton6a'
+          fluid
+          primary
+          icon='book'
+          iconPosition='before'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Fits to container'
+          }}
+        />
+        <br/>
+        <Button
+          instance='suirbutton6b'
+          fluid
+          secondary
+          icon='smile'
+          iconPosition='after'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'See how this very long text shows up on the button'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Circular:'/>
+        <br/>
+        <Button
+          instance='suirbutton7a'
+          circular
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'C'
+          }}
+        />
+        <Button
+          instance='suirbutton7b'
+          circular
+          icon='book'
+          iconPosition='after'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Confusingly long'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Circular Emphasis:'/>
+        <br/>
+        <Button
+          instance='suirbutton8a'
+          circular
+          primary
+          icon='coffee'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          instance='suirbutton8b'
+          circular
+          secondary
+          icon='money'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Circular Emphasis:'/>
+        <br/>
+        <Button
+          instance='suirbutton9a'
+          text
+          icon='book'
+          iconPosition='before'
+          initContent={{
+            label: 'Default'
+          }}
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          instance='suirbutton9b'
+          text
+          primary
+          initContent={{
+            label: 'Primary'
+          }}
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          instance='suirbutton9c'
+          text
+          secondary
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Secondary'
+          }}
+        />
+        <Button
+          instance='suirbutton9d'
+          text
+          icon='compass outline'
+          iconOnly
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+      </React.Fragment>
+    ),
+    { notes: 'Various Buttons.' }
+  )
+  .add(
+    'Disabled',
+    () => (
+      <React.Fragment>
+        <Text size='large' weight='bold' content='Default:'/>
+        <br/>
+        <Button
+            instance='suirbutton1a'
+            disabled
+            actions={{
+              onClick: {
+                action: 'chgTheme',
+                target: 'themer',
+                arguments: {
+                  newTheme: themes.teams
+                }
+              }
+            }}
+            initContent={{
+              label: 'Click Here'
+            }}
+          />
+          <Button
+            instance='suirbutton1b'
+            disabled
+            actions={{
+              onClick: {
+                action: 'chgTheme',
+                target: 'themer',
+                arguments: {
+                  newTheme: themes.teamsHighContrast
+                }
+              }
+            }}
+            initContent={{
+              label: 'See how this very long text shows up on the button'
+            }}
+          />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Emphasis:'/>
+        <br/>
+        <Button
+          disabled
+          primary
+          instance='suirbutton2a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Primary'
+          }}
+        />
+        <Button
+          disabled
+          secondary
+          instance='suirbutton2b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Secondary'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Icon:'/>
+        <br/>
+        <Button
+          primary
+          disabled
+          icon='book'
+          instance='suirbutton3a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          secondary
+          disabled
+          icon='book'
+          instance='suirbutton3b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Icon Only:'/>
+        <br/>
+        <Button
+          primary
+          disabled
+          icon='book'
+          iconOnly
+          instance='suirbutton4a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          secondary
+          icon='book'
+          disabled
+          iconOnly
+          instance='suirbutton4b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Icon and Content:'/>
+        <br/>
+        <Button
+          primary
+          disabled
+          icon='book'
+          iconPosition='before'
+          instance='suirbutton5a'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me before'
+          }}
+        />
+        <Button
+          primary
+          disabled
+          icon='book'
+          iconPosition='after'
+          instance='suirbutton5b'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me after'
+          }}
+        />
+        <br/>
+        <Button
+          secondary
+          disabled
+          icon='book'
+          iconPosition='before'
+          instance='suirbutton5c'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me before'
+          }}
+        />
+        <Button
+          secondary
+          disabled
+          icon='book'
+          iconPosition='after'
+          instance='suirbutton5d'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Click me after'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Fluid:'/>
+        <br/>
+        <Button
+          instance='suirbutton6a'
+          disabled
+          fluid
+          primary
+          icon='book'
+          iconPosition='before'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'Fits to container'
+          }}
+        />
+        <br/>
+        <Button
+          instance='suirbutton6b'
+          disabled
+          fluid
+          secondary
+          icon='smile'
+          iconPosition='after'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'See how this very long text shows up on the button'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Circular:'/>
+        <br/>
+        <Button
+          instance='suirbutton7a'
+          disabled
+          circular
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+          initContent={{
+            label: 'C'
+          }}
+        />
+        <Button
+          instance='suirbutton7b'
+          disabled
+          circular
+          icon='book'
+          iconPosition='after'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Confusingly long'
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Circular Emphasis:'/>
+        <br/>
+        <Button
+          instance='suirbutton8a'
+          disabled
+          circular
+          primary
+          icon='coffee'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          instance='suirbutton8b'
+          disabled
+          circular
+          secondary
+          icon='money'
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+        <br/>
+        <br/>
+        <Text size='large' weight='bold' content='Circular Emphasis:'/>
+        <br/>
+        <Button
+          instance='suirbutton9a'
+          disabled
+          text
+          icon='book'
+          iconPosition='before'
+          initContent={{
+            label: 'Default'
+          }}
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          instance='suirbutton9b'
+          disabled
+          text
+          primary
+          initContent={{
+            label: 'Primary'
+          }}
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teams
+              }
+            }
+          }}
+        />
+        <Button
+          instance='suirbutton9c'
+          disabled
+          text
+          secondary
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+          initContent={{
+            label: 'Secondary'
+          }}
+        />
+        <Button
+          instance='suirbutton9d'
+          text
+          icon='compass outline'
+          iconOnly
+          actions={{
+            onClick: {
+              action: 'chgTheme',
+              target: 'themer',
+              arguments: {
+                newTheme: themes.teamsHighContrast
+              }
+            }
+          }}
+        />
+      </React.Fragment>
+    ),
+    { notes: 'Various Buttons.' }
+  );

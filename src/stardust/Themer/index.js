@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { Provider, themes } from '@stardust-ui/react';
+// eslint-disable-next-line no-unused-vars
 import actions from './ducks/actions';
 import types from './ducks/action-types';
 import { libName, uuid } from '../ns';
@@ -26,13 +27,16 @@ const nsReducer = [uuid, libName, componentName, 'Reducer'].join('');
 const mapStateToProps = (state, ownProps) => ({
 });
 
+// eslint-disable-next-line no-unused-vars
 const mapDispatchToProps = dispatch => ({
   dispatchers: {
+    /* shouldn't need to dispatch
     chgColor: (instance, args) => dispatch(actions.chgColor(ns, instance, args.newColor)),
     chgLabel: (instance, args) => dispatch(actions.chgLabel(ns, instance, args.newLabel)),
     complexChgLabel: (instances, args) => {
       instances.map(cur => dispatch(actions.chgLabel(ns, cur, args.newLabel)));
     }
+    */
   }
 });
 

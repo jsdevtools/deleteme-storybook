@@ -14,7 +14,7 @@ const StyledFloat = styled.div`
   pointer-events: none;
 `;
 
-const TopFloat = styled(StyledFloat)`
+const TopFloat = styled(StyledFloatAbsolute)`
   width: 100%;
   text-align: center;
   top: ${props => props.top}; 
@@ -43,20 +43,26 @@ class Float extends Component {
       case 'topRight':
         return (
           <TopRightFloat zIndex={zIndex} top={this.props.margin} right={this.props.margin}>
-            {toDisplay}
+            <div style={{ pointerEvents: 'auto' }}>
+              {toDisplay}
+            </div>
           </TopRightFloat>
         );
       case 'topLeft':
         return (
           <TopLeftFloat zIndex={zIndex} top={this.props.margin} left={this.props.margin}>
-            {toDisplay}
+            <div style={{ pointerEvents: 'auto' }}>
+              {toDisplay}
+            </div>
           </TopLeftFloat>
         );
       default:
         return (
           <TopFloat zIndex={zIndex} top={this.props.margin}>
             <Centered>
-              {toDisplay}
+              <div style={{ pointerEvents: 'auto' }}>
+                {toDisplay}
+              </div>
             </Centered>
           </TopFloat>
         );

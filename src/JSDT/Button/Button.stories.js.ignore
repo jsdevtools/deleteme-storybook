@@ -6,6 +6,7 @@ import { withNotes } from '@storybook/addon-notes';
 import { Themer } from '../Themer';
 import themes from '../Themer/theme';
 import store from '../../app/state/store';
+// eslint-disable-next-line no-unused-vars
 import { Button, ColoredButton } from '.';
 import { StoryActionLogger } from '../StoryActionLogger';
 

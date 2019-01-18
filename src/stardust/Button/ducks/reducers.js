@@ -6,19 +6,16 @@ const buttonReducer = (state = {}, action) => {
     case types.CHG_COLOR:
       return Object.keys(state)
         .filter(key => key.includes(`${ns}${action.payload.instance}/styling`))
-        .reduce((acc, curr) => {
-          console.log('STARDUST HIT', state, ns, action);
-          return {
-            ...acc,
-            [curr]: {
-              ...state[curr],
-              color: {
-                ...state[curr].color,
-                effective: action.payload.newColor
-              }
+        .reduce((acc, curr) => ({
+          ...acc,
+          [curr]: {
+            ...state[curr],
+            color: {
+              ...state[curr].color,
+              effective: action.payload.newColor
             }
           }
-        }, { ...state });
+        }), { ...state });
     case types.CHG_LABEL:
       return Object.keys(state)
         .filter(key => key.includes(`${ns}${action.payload.instance}/content`))

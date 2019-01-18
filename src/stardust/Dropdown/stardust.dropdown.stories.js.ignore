@@ -1,0 +1,95 @@
+import React from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import { storiesOf, addDecorator } from '@storybook/react';
+import { withNotes } from '@storybook/addon-notes';
+// eslint-disable-next-line no-unused-vars
+import { themes, Text } from '@stardust-ui/react';
+import { Themer } from '../Themer';
+import store from '../../app/state/store';
+import { StoryActionLogger } from '../../JSDT/StoryActionLogger';
+import { Dropdown } from '.';
+import { Button } from '../Button';
+
+const theme = {
+  borderWidth: '2px',
+  'button.primary': 'mediumseagreen',
+  'button.secondary': 'magenta'
+};
+
+const ThemeDecorator = storyFn => (
+  <ThemeProvider theme={theme}>
+    { storyFn() }
+  </ThemeProvider>
+);
+
+const ReduxDecorator = storyFn => (
+  <ReduxProvider store={store}>
+    <StoryActionLogger/>
+      { storyFn() }
+  </ReduxProvider>
+);
+
+addDecorator(withNotes);
+addDecorator(ThemeDecorator);
+addDecorator(ReduxDecorator);
+
+storiesOf('stardust/Dropdown', module)
+  .add(
+    'Default',
+    () => (
+      <Themer
+        instance='themer'
+      >
+        <div style={{
+          padding: '15px', background: '#bbb', width: '100%', height: '100%', flexDirection: 'verticle'
+        }}>
+          <Text size='large' weight='bold' content='Default:'/>
+          <br/>
+          <Dropdown
+              instance='suirdropdown'
+              multiple
+              placeholder={'Make a selection...'}
+              toggleButton
+              search
+              content={{}}
+              styling={{}}
+              actions={{
+                onSearchQueryChange: {
+                  action: 'chgSearchQuery',
+                  target: 'suirdropdown1a',
+                  arguments: {
+                    newSearchQuery: ''
+                  }
+                },
+                onSelectedChange: {
+                  action: 'chgSelected',
+                  target: 'themer'
+                }
+              }}
+              initItems={[
+                'teams',
+                'teamsHighContrast'
+              ]}
+            />
+            <br/>
+            <Button
+              instance='suirbutton1a'
+              actions={{
+                onClick: {
+                  action: 'chgTheme',
+                  target: 'themer',
+                  arguments: {
+                    newTheme: themes.teams
+                  }
+                }
+              }}
+              initContent={{
+                label: 'Click Here'
+              }}
+            />
+          </div>
+      </Themer>
+    ),
+    { notes: 'Various Dropdowns.' }
+  );
